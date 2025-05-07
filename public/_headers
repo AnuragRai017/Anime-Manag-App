@@ -10,6 +10,7 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   
   # Content Security Policy
   Content-Security-Policy: default-src 'self'; img-src 'self' https://uploads.mangadex.org https://*.mangadex.network data:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self' https://api.mangadex.org;
@@ -19,4 +20,9 @@
 
 # Specific headers for HTML files
 /*.html
+  Cache-Control: public, max-age=3600
+
+# Next.js specific assets
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
   Cache-Control: public, max-age=0, must-revalidate

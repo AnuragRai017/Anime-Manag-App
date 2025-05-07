@@ -20,11 +20,14 @@ const nextConfig = {
         pathname: "/data/**",
       },
     ],
+    unoptimized: process.env.NODE_ENV === 'production', // For Cloudflare Pages to work with Next.js images
   },
   // Configure for edge compatibility
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
+  // Improve compatibility with Cloudflare Pages
+  output: 'standalone',
 };
 
 // Apply Cloudflare Pages specific transformations

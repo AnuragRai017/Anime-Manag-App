@@ -1,10 +1,8 @@
 {
   "name": "manga-reader-web-app",
-  "compatibility_date": "2025-05-07",
-  // Assets configuration
+  "compatibility_date": "2025-05-07",  // Assets configuration
   "assets": {
-    "directory": ".vercel/output/static",
-    "exclude": ["_next/static/media/**", "**/*.map"]
+    "directory": ".vercel/output/static"
   },
   // Main worker script
   "main": "./.vercel/output/functions/_middleware.js",
