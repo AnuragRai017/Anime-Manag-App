@@ -1,9 +1,10 @@
-import { NextConfig } from 'next';
+// next.cloudflare.js - Configuration for Cloudflare Pages deployment
+// This file is used by the next-on-pages plugin
 
-/**
- * Configure Next.js for Cloudflare Pages deployment
- */
-const nextConfig: NextConfig = {
+const { withCloudflareHeaders } = require('@cloudflare/next-on-pages/headers');
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -26,4 +27,5 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// Apply Cloudflare Pages specific transformations
+module.exports = withCloudflareHeaders(nextConfig);

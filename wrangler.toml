@@ -1,0 +1,34 @@
+# wrangler.toml - Cloudflare Workers configuration file
+name = "manga-reader-web-app"
+compatibility_date = "2025-05-07"
+workers_dev = true
+main = "./.vercel/output/functions/_middleware.js"
+
+# Configure your build output directory
+[site]
+bucket = ".vercel/output/static"
+
+# Configure environment variables if needed
+[vars]
+# Define any environment variables your app needs
+NEXT_PUBLIC_API_URL = "https://api.mangadex.org"
+
+# Configure build command
+[build]
+command = "npm run build && npm run pages:build"
+
+[env.production]
+# Production-specific settings
+route = { pattern = "*manga-reader.yourdomain.com/*", zone_name = "yourdomain.com" }
+# You can override environment variables for production
+vars = { ENVIRONMENT = "production" }
+
+[env.staging]
+# Staging-specific settings
+name = "manga-reader-web-app-staging"
+vars = { ENVIRONMENT = "staging" }
+
+# Define page rules (optional)
+[[rules]]
+type = "ESModule"
+globs = ["**/*.js"]

@@ -1,0 +1,11 @@
+# _redirects - Cloudflare Pages redirects configuration
+# Format: from_path to_path status_code
+
+# Redirects all routes to the index.html file to support client-side routing
+/*    /index.html   200
+
+# Example: Redirect an old page to a new page
+# /old-page    /new-page    301
+
+# Handle specific file types
+# /*.pdf    /documents/:splat    301

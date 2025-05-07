@@ -1,9 +1,5 @@
-import { NextConfig } from 'next';
-
-/**
- * Configure Next.js for Cloudflare Pages deployment
- */
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -26,4 +22,11 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// Check if we're running a Cloudflare Pages production build
+if (process.env.CF_PAGES === '1') {
+  // Use dynamic import with require
+  const { withCloudflarePages } = require('@cloudflare/next-on-pages');
+  module.exports = withCloudflarePages(nextConfig);
+} else {
+  module.exports = nextConfig;
+}
