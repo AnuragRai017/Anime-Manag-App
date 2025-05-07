@@ -1,0 +1,71 @@
+/* Animation utility classes */
+.stagger-delay-50 {
+  animation-delay: 50ms;
+}
+
+.stagger-delay-100 {
+  animation-delay: 100ms;
+}
+
+.stagger-delay-150 {
+  animation-delay: 150ms;
+}
+
+.stagger-delay-200 {
+  animation-delay: 200ms;
+}
+
+.stagger-delay-250 {
+  animation-delay: 250ms;
+}
+
+.stagger-delay-300 {
+  animation-delay: 300ms;
+}
+
+.stagger-delay-350 {
+  animation-delay: 350ms;
+}
+
+.stagger-delay-400 {
+  animation-delay: 400ms;
+}
+
+.stagger-delay-450 {
+  animation-delay: 450ms;
+}
+
+.stagger-delay-500 {
+  animation-delay: 500ms;
+}
+
+/* Animation fill modes */
+.fill-backwards {
+  animation-fill-mode: backwards;
+}
+
+.fill-forwards {
+  animation-fill-mode: forwards;
+}
+
+.fill-both {
+  animation-fill-mode: both;
+}
+
+/* Animation play states */
+.anim-paused {
+  animation-play-state: paused;
+}
+
+.anim-running {
+  animation-play-state: running;
+}
+
+/* Group hover animations */
+.group-hover\:anim-running:not(.group:hover) {
+  animation-play-state: paused;
+}
+
+.group:hover .group-hover\:anim-running {
+  animation-play-state: running;
+}

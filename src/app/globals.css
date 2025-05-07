@@ -1,22 +1,379 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+ 
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+ 
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+ 
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+ 
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+ 
+    --radius: 0.5rem;
   }
+ 
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+ 
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+ 
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+ 
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+ 
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+ 
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+ 
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+}
+ 
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(155, 155, 155, 0.5);
+  border-radius: 20px;
+  border: 2px solid transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(155, 155, 155, 0.8);
+}
+
+/* Theme-specific custom scrollbar */
+.theme-naruto .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #FF6B00, #FFA500);
+  border-radius: 10px;
+}
+
+.theme-bleach .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #000000, #333333);
+  border-radius: 2px;
+}
+
+.theme-one-piece .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #FF0000, #FFD700);
+  border-radius: 20px;
+}
+
+.theme-jjk .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #4B0082, #9370DB);
+  border-radius: 0;
+  border: 1px solid #9370DB;
+}
+
+.theme-solo-leveling .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #800080, #4B0082);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(128, 0, 128, 0.5);
+}
+
+.theme-demon-slayer .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #FF1493, #4169E1);
+  border-radius: 8px;
+}
+
+.theme-dragon-ball .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #FFA500, #4169E1);
+  border-radius: 15px;
+  border: 2px solid #FFD700;
+}
+
+/* Add these theme transition styles at the beginning of the file */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+body {
+  transition: background-color 0.5s ease;
+}
+
+/* Theme-specific animations */
+@keyframes chakra-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.4); }
+  50% { box-shadow: 0 0 20px 10px rgba(255, 107, 0, 0.2); }
+}
+
+@keyframes zanpakuto {
+  0% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.05); filter: brightness(1.2); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes gear-bounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-10px) scale(1.05); }
+}
+
+@keyframes curse-energy {
+  0% { box-shadow: 0 0 0 0 rgba(75, 0, 130, 0); }
+  50% { box-shadow: 0 0 20px 5px rgba(75, 0, 130, 0.3); }
+  100% { box-shadow: 0 0 0 0 rgba(75, 0, 130, 0); }
+}
+
+@keyframes arise {
+  0% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.05); filter: brightness(1.5) hue-rotate(270deg); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes breath {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); filter: hue-rotate(45deg); }
+  100% { transform: scale(1); }
+}
+
+@keyframes power-up {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.05) rotate(1deg); }
+  50% { transform: scale(1.1) rotate(-1deg); filter: brightness(1.2); }
+  75% { transform: scale(1.05) rotate(1deg); }
+  100% { transform: scale(1); }
+}
+
+/* Custom text shadow effect for the manga logo */
+.drop-shadow-glow {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
+              0 0 20px rgba(255, 255, 255, 0.6),
+              0 0 30px rgba(255, 255, 255, 0.4),
+              0 0 40px rgba(255, 255, 255, 0.2);
+}
+
+/* Glass morphism effect */
+.glass-effect {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass-effect {
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 5px rgba(var(--primary-rgb), 0.5);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.7);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(var(--primary-rgb), 0.5);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 15s ease infinite;
+  background-size: 200% 200%;
+}
+
+/* Theme-specific scroll animations */
+.scroll-naruto::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #FF6B00, #FFA500);
+  border-radius: 10px;
+}
+
+.scroll-bleach::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #000000, #333333);
+  border-radius: 2px;
+}
+
+.scroll-pirate::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #FF0000, #FFD700);
+  border-radius: 20px;
+}
+
+.scroll-domain::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #4B0082, #9370DB);
+  border-radius: 0;
+  border: 1px solid #9370DB;
+}
+
+.scroll-shadow::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #800080, #4B0082);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(128, 0, 128, 0.5);
+}
+
+.scroll-nichirin::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #FF1493, #4169E1);
+  border-radius: 8px;
+}
+
+.scroll-saiyan::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #FFA500, #4169E1);
+  border-radius: 15px;
+  border: 2px solid #FFD700;
+}
+
+/* Card Animations */
+.hover\:animate-chakra-pulse:hover {
+  animation: chakra-pulse 2s infinite;
+}
+
+.hover\:animate-zanpakuto:hover {
+  animation: zanpakuto 1s ease-in-out;
+}
+
+.hover\:animate-gear-bounce:hover {
+  animation: gear-bounce 0.5s ease-in-out;
+}
+
+.hover\:animate-curse-energy:hover {
+  animation: curse-energy 1.5s infinite;
+}
+
+.hover\:animate-arise:hover {
+  animation: arise 1s ease-in-out;
+}
+
+.hover\:animate-breath:hover {
+  animation: breath 1s ease-in-out;
+}
+
+.hover\:animate-power-up:hover {
+  animation: power-up 1s ease-in-out;
+}
+
+/* Theme Classes */
+.theme-naruto {
+  --theme-primary: 24 100% 50%;
+  --theme-secondary: 39 100% 50%;
+}
+
+.theme-bleach {
+  --theme-primary: 0 0% 0%;
+  --theme-secondary: 0 0% 100%;
+}
+
+.theme-one-piece {
+  --theme-primary: 0 100% 50%;
+  --theme-secondary: 51 100% 50%;
+}
+
+.theme-jjk {
+  --theme-primary: 275 100% 25%;
+  --theme-secondary: 260 59% 65%;
+}
+
+.theme-solo-leveling {
+  --theme-primary: 300 100% 25%;
+  --theme-secondary: 275 100% 25%;
+}
+
+.theme-demon-slayer {
+  --theme-primary: 328 100% 50%;
+  --theme-secondary: 225 71% 57%;
+}
+
+.theme-dragon-ball {
+  --theme-primary: 39 100% 50%;
+  --theme-secondary: 225 71% 57%;
 }
 
 body {

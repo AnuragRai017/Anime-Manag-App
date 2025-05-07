@@ -1,7 +1,22 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "uploads.mangadex.org",
+        port: "",
+        pathname: "/covers/**",
+      },
+      {
+        protocol: "https",
+        hostname: "**.mangadex.network",
+        port: "",
+        pathname: "/data/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
