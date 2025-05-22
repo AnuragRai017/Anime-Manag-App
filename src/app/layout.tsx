@@ -1,7 +1,6 @@
-"use client";
-
+import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { useEffect } from "react";
+import Script from "next/script";
 import "./globals.css";
 // Import all CSS files centrally to avoid preload warnings
 import "@/styles/enhanced-ui.css";
@@ -16,9 +15,7 @@ const geist = Geist({
   variable: "--font-sans",
 });
 
-// Metadata needs to be in a separate file or in a server component
-// This will be ignored in client components
-const siteInfo = {
+export const metadata: Metadata = {
   title: "Manga Reader",
   description: "A modern manga reader web application",
 };
@@ -28,35 +25,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Force CSS to be used immediately after hydration
-  useEffect(() => {
-    // First render - force a layout calculation
-    void document.body.offsetHeight;
-    
-    // Apply a class to trigger CSS usage
-    const forceStyles = () => {
-      // Apply classes that use the CSS for each imported stylesheet
-      document.body.classList.add("force-enhance-ui", "force-banner-animations", "force-animation-utils");
-      // Then immediately remove them
-      requestAnimationFrame(() => {
-        document.body.classList.remove("force-enhance-ui", "force-banner-animations", "force-animation-utils");
-      });
-    };
-    
-    // Run immediately and again after potential lazy-loaded resources
-    forceStyles();
-    window.addEventListener('load', forceStyles);
-    
-    return () => {
-      window.removeEventListener('load', forceStyles);
-    };
-  }, []);
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>{siteInfo.title}</title>
-        <meta name="description" content={siteInfo.description} />
+        {/* These help ensure CSS is used immediately */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white font-sans antialiased ${geist.variable}`}>
         <ThemeProvider
@@ -77,6 +50,32 @@ export default function RootLayout({
             </div>
           </AnimeThemeProvider>
         </ThemeProvider>
+        
+        {/* Script to fix CSS preload issue */}
+        <Script id="fix-preload-css" strategy="afterInteractive">
+          {`
+            // Force a reflow to ensure CSS is used immediately
+            document.body.getBoundingClientRect();
+            
+            // Create a style element to force CSS usage
+            function forceStylesUsage() {
+              var styleEl = document.createElement('style');
+              styleEl.textContent = 
+                '.force-css-usage::before { content: ""; }' +
+                '.force-css-usage::after { animation: none; }';
+              document.head.appendChild(styleEl);
+              document.body.classList.add('force-css-usage');
+              setTimeout(() => {
+                document.body.classList.remove('force-css-usage');
+                styleEl.remove();
+              }, 100);
+            }
+            
+            // Run on load and after interactive
+            window.addEventListener('load', forceStylesUsage);
+            forceStylesUsage();
+          `}
+        </Script>
       </body>
     </html>
   );

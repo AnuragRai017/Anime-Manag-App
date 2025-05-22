@@ -6,6 +6,7 @@ import { MangaDexAPI, MangaData } from "@/lib/api";
 import { MangaCard } from "@/components/manga-card";
 import { LoadingSpinner } from "@/components/ui/loading";
 
+
 // MangaDex tag IDs for genres
 const GENRE_TAG_IDS: Record<string, string> = {
   "action": "391b0423-d847-456f-aff0-8b0cfc03066b",
@@ -30,7 +31,8 @@ const formatGenreName = (genre: string): string => {
 
 export default function GenrePage() {
   const params = useParams();
-  const genre = params.genre as string;
+  // Ensure TypeScript knows this is a string and cannot be null/undefined
+  const genre = params?.genre ? String(params.genre) : '';
   const [mangaList, setMangaList] = useState<MangaData[]>([]);
   const [loading, setLoading] = useState(true);
   const [offset, setOffset] = useState(0);
@@ -50,10 +52,10 @@ export default function GenrePage() {
       setLoading(true);
       
       // Create params for the API call
-      const params: Record<string, string | string[]> = {
+      const params = {
         'order[followedCount]': 'desc',
-        'contentRating[]': ['safe', 'suggestive'],
-        'includedTags[]': [genreId]
+        'contentRating[]': 'safe,suggestive',
+        'includedTags[]': genreId
       };
       
       const response = await MangaDexAPI.getAllManga(currentOffset, MANGA_LIMIT, params);
@@ -74,6 +76,7 @@ export default function GenrePage() {
   // Initial load
   useEffect(() => {
     loadManga(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [genre]);
 
   // Infinite scroll setup
@@ -95,6 +98,7 @@ export default function GenrePage() {
     return () => {
       if (observer.current) observer.current.disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, hasMore, offset]);
 
   return (
@@ -140,7 +144,7 @@ export default function GenrePage() {
       {/* End of list message */}
       {!hasMore && mangaList.length > 0 && (
         <div className="text-center text-muted-foreground py-8 border-t mt-8">
-          <p className="font-medium">You've reached the end!</p>
+          <p className="font-medium">You&apos;ve reached the end!</p>
           <p className="text-sm mt-1">Found <span className="text-primary font-medium">{mangaList.length}</span> {formattedGenreName} manga titles</p>
         </div>
       )}

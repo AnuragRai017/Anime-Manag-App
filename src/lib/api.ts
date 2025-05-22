@@ -232,13 +232,13 @@ export class MangaDexAPI {
       throw error;
     }
   }
-
   /**
    * Fetches a list of manga with pagination and optional parameters.
    * @param offset - The number of manga to skip.
    * @param limit - The maximum number of manga to return (max 100).
    * @param params - Optional additional query parameters (e.g., sorting, filtering).
-   */  static async getAllManga(offset: number = 0, limit: number = 20, params: Record<string, string> = {}): Promise<MangaResponse> {
+   */  
+  static async getAllManga(offset: number = 0, limit: number = 20, params: Record<string, string> = {}): Promise<MangaResponse> {
     // Create URLSearchParams object for query parameters
     const queryParams = new URLSearchParams();
     

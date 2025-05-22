@@ -1,9 +1,4 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { MangaDexAPI, MangaData } from "@/lib/api";
-import { MangaCard } from "@/components/manga-card";
-import { LoadingSpinner } from "@/components/ui/loading";
+import Link from 'next/link';
 
 // MangaDex tag IDs for genres
 const GENRE_TAG_IDS: Record<string, string> = {
@@ -20,7 +15,7 @@ const GENRE_TAG_IDS: Record<string, string> = {
 };
 
 export default function GenresPage() {
-  const [genres, setGenres] = useState<string[]>(Object.keys(GENRE_TAG_IDS));
+  const genres = Object.keys(GENRE_TAG_IDS);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -28,7 +23,7 @@ export default function GenresPage() {
       
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {genres.map((genre) => (
-          <a 
+          <Link 
             key={genre}
             href={`/genres/${genre.toLowerCase()}`}
             className="bg-card hover:bg-accent p-4 rounded-lg text-center transition-all hover:scale-105 shadow-md"
@@ -37,7 +32,7 @@ export default function GenresPage() {
             <p className="text-sm text-muted-foreground mt-2">
               Explore {genre} manga
             </p>
-          </a>
+          </Link>
         ))}
       </div>
     </div>
