@@ -16,8 +16,9 @@ const geist = Geist({
   variable: "--font-sans",
 });
 
-// Metadata cannot be used in Client Components
-export const metadata = {
+// Metadata needs to be in a separate file or in a server component
+// This will be ignored in client components
+const siteInfo = {
   title: "Manga Reader",
   description: "A modern manga reader web application",
 };
@@ -53,7 +54,10 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
+      <head>
+        <title>{siteInfo.title}</title>
+        <meta name="description" content={siteInfo.description} />
+      </head>
       <body className={`min-h-screen bg-white dark:bg-gray-900 text-black dark:text-white font-sans antialiased ${geist.variable}`}>
         <ThemeProvider
           attribute="class"

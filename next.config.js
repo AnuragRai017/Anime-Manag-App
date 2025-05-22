@@ -62,12 +62,5 @@ const nextConfig = {
   },
 };
 
-// Import the CSS preload polyfill wrapper
-try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const withCssPreloadPolyfill = require('next-with-css-preload-polyfill');
-  module.exports = withCssPreloadPolyfill(nextConfig);
-} catch (e) {
-  console.warn('CSS preload polyfill not found, using base config');
-  module.exports = nextConfig;
-}
+// Export the configuration
+module.exports = nextConfig;
