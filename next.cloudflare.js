@@ -20,15 +20,20 @@ const nextConfig = {
         pathname: "/data/**",
       },
     ],
-    unoptimized: process.env.NODE_ENV === 'production', // For Cloudflare Pages to work with Next.js images
+    unoptimized: true, // Required for Cloudflare Pages
   },
-  // Configure for edge compatibility
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
-  // Improve compatibility with Cloudflare Pages
-  output: 'standalone',
+  // Required for Cloudflare Pages
+  output: 'export',
+  distDir: '.vercel/output',
+  trailingSlash: true,
+  skipTrailingSlashRedirect: true,
 };
+
+// Apply Cloudflare-specific headers
+module.exports = withCloudflareHeaders(nextConfig);
 
 // Apply Cloudflare Pages specific transformations
 module.exports = withCloudflareHeaders(nextConfig);

@@ -3,9 +3,12 @@ name = "manga-reader-web-app"
 compatibility_date = "2025-05-07"
 workers_dev = true
 
-# Configure your build output directory
-[site]
-bucket = ".vercel/output/static"
+main = "./.vercel/output/functions/index.js"
+site = { bucket = "./.vercel/output/static" }
+
+compatibility_flags = [
+  "nodejs_compat"
+]
 
 # Configure environment variables if needed
 [vars]

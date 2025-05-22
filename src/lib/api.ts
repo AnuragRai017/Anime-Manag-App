@@ -1,5 +1,6 @@
 // MangaDex API service
-const BASE_URL = 'https://api.mangadex.org';
+// Using our proxy to avoid CORS issues
+const BASE_URL = '/api/mangadex';
 
 export interface MangaResponse {
   result: string;
@@ -106,7 +107,7 @@ export class MangaDexAPI {
   static async getMangaList(offset = 0, limit = 10): Promise<MangaResponse> {
     try {
       const response = await fetch(
-        `${BASE_URL}/manga?limit=${limit}&offset=${offset}&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&includes[]=cover_art&includes[]=author&order[latestUploadedChapter]=desc`,
+        `${BASE_URL}?path=/manga&limit=${limit}&offset=${offset}&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&includes[]=cover_art&includes[]=author&order[latestUploadedChapter]=desc`,
         {
           method: 'GET',
           headers: {
@@ -130,7 +131,7 @@ export class MangaDexAPI {
   static async getMangaById(id: string): Promise<{ data: MangaData }> {
     try {
       const response = await fetch(
-        `${BASE_URL}/manga/${id}?includes[]=cover_art&includes[]=author&includes[]=artist`,
+        `${BASE_URL}?path=/manga/${id}&includes[]=cover_art&includes[]=author&includes[]=artist`,
         {
           method: 'GET',
           headers: {
@@ -159,7 +160,7 @@ export class MangaDexAPI {
   ): Promise<ChapterResponse> {
     try {
       const response = await fetch(
-        `${BASE_URL}/manga/${mangaId}/feed?limit=${limit}&offset=${offset}&translatedLanguage[]=${translatedLanguage}&order[volume]=desc&order[chapter]=desc&includes[]=scanlation_group`,
+        `${BASE_URL}?path=/manga/${mangaId}/feed&limit=${limit}&offset=${offset}&translatedLanguage[]=${translatedLanguage}&order[volume]=desc&order[chapter]=desc&includes[]=scanlation_group`,
         {
           method: 'GET',
           headers: {
@@ -183,7 +184,7 @@ export class MangaDexAPI {
   static async getChapter(chapterId: string): Promise<ChapterData> {
     try {
       const response = await fetch(
-        `${BASE_URL}/chapter/${chapterId}?includes[]=scanlation_group`,
+        `${BASE_URL}?path=/chapter/${chapterId}&includes[]=scanlation_group`,
         {
           method: 'GET',
           headers: {
@@ -208,7 +209,7 @@ export class MangaDexAPI {
   static async getChapterPages(chapterId: string): Promise<AtHomeResponse> {
     try {
       const response = await fetch(
-        `${BASE_URL}/at-home/server/${chapterId}`,
+        `${BASE_URL}?path=/at-home/server/${chapterId}`,
         {
           method: 'GET',
           cache: 'no-cache',
@@ -269,7 +270,7 @@ export class MangaDexAPI {
     }
     
     // Fetch with constructed query string
-    const response = await fetch(`${BASE_URL}/manga?${queryParams.toString()}`);
+    const response = await fetch(`${BASE_URL}?path=/manga&${queryParams.toString()}`);
     
     if (!response.ok) {
       console.error(`API Error: ${response.status} ${response.statusText}`);
