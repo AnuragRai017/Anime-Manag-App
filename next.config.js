@@ -19,6 +19,8 @@ const nextConfig = {
   // Configure for edge compatibility
   experimental: {
     optimizePackageImports: ['lucide-react'],
+    // Fix for CSS preload warnings
+    optimizeCss: true
   },
   // Control asset preloading to fix preload warnings
   httpAgentOptions: {
@@ -28,22 +30,44 @@ const nextConfig = {
   optimizeFonts: true,
   // Improve CSS module handling
   webpack: (config) => {
-    // Ensure proper CSS handling
-    const oneOfRule = config.module.rules.find((rule) => typeof rule.oneOf === 'object');
-    if (oneOfRule) {
-      const moduleSassRule = oneOfRule.oneOf.find(
-        (rule) => rule.test?.toString().includes('module\\.(scss|sass)')
-      );
-      if (moduleSassRule) {
-        const cssLoader = moduleSassRule.use.find(({ loader }) => loader.includes('css-loader'));
-        if (cssLoader) {
-          cssLoader.options.modules.exportOnlyLocals = false;
-        }
-      }
+    // Ensure CSS files use correct preload attributes
+    if (!config.module) {
+      config.module = { rules: [] };
     }
+    
+    // Add a rule to handle CSS preload links
+    const cssRule = config.module.rules.find(rule => 
+      rule.oneOf && Array.isArray(rule.oneOf) && 
+      rule.oneOf.some(r => r.test && r.test.test && r.test.test('.css'))
+    );
+    
+    if (cssRule && cssRule.oneOf) {
+      cssRule.oneOf.forEach(rule => {
+        if (rule.use && Array.isArray(rule.use)) {
+          const cssLoader = rule.use.find(u => 
+            typeof u === 'object' && u.loader && u.loader.includes('css-loader')
+          );
+          
+          if (cssLoader && typeof cssLoader === 'object') {
+            // Ensure CSS modules are properly configured
+            if (!cssLoader.options) cssLoader.options = {};
+            if (!cssLoader.options.modules) cssLoader.options.modules = {};
+            cssLoader.options.modules.exportOnlyLocals = false;
+          }
+        }
+      });
+    }
+    
     return config;
   },
 };
 
-// Export config, handling Cloudflare integration conditionally
-module.exports = nextConfig;
+// Import the CSS preload polyfill wrapper
+try {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const withCssPreloadPolyfill = require('next-with-css-preload-polyfill');
+  module.exports = withCssPreloadPolyfill(nextConfig);
+} catch (e) {
+  console.warn('CSS preload polyfill not found, using base config');
+  module.exports = nextConfig;
+}
