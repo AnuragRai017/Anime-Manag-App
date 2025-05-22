@@ -5,9 +5,6 @@ import { useMemo, useState, useEffect } from "react"
 import Image from "next/image"
 import { MangaData, getCoverImage, getMangaTitle } from "@/lib/api"
 
-// Import enhanced UI styles
-import "@/styles/enhanced-ui.css"
-
 interface MangaCardProps {
   manga: MangaData
   priority?: boolean

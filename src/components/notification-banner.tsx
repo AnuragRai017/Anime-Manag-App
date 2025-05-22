@@ -5,9 +5,6 @@ import { X, Info, AlertTriangle, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-// Import enhanced UI styles
-import "@/styles/enhanced-ui.css"
-
 interface NotificationBannerProps {
   message: string;
   type?: "info" | "success" | "warning" | "error";

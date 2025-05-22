@@ -7,9 +7,6 @@ import { Button } from "@/components/ui/button"
 import { useState, useMemo, useEffect } from "react"
 import { useTheme } from "@/lib/theme-context"
 
-// Import our new banner animations
-import "@/styles/banner-animations.css"
-
 interface MangaBannerProps {
   manga: MangaData
   variant?: "large" | "medium" | "small"

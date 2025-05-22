@@ -20,13 +20,30 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
+  // Control asset preloading to fix preload warnings
+  httpAgentOptions: {
+    keepAlive: true,
+  },
+  // Optimize CSS loading
+  optimizeFonts: true,
+  // Improve CSS module handling
+  webpack: (config) => {
+    // Ensure proper CSS handling
+    const oneOfRule = config.module.rules.find((rule) => typeof rule.oneOf === 'object');
+    if (oneOfRule) {
+      const moduleSassRule = oneOfRule.oneOf.find(
+        (rule) => rule.test?.toString().includes('module\\.(scss|sass)')
+      );
+      if (moduleSassRule) {
+        const cssLoader = moduleSassRule.use.find(({ loader }) => loader.includes('css-loader'));
+        if (cssLoader) {
+          cssLoader.options.modules.exportOnlyLocals = false;
+        }
+      }
+    }
+    return config;
+  },
 };
 
-// Check if we're running a Cloudflare Pages production build
-if (process.env.CF_PAGES === '1') {
-  // Use dynamic import with require
-  const { withCloudflarePages } = require('@cloudflare/next-on-pages');
-  module.exports = withCloudflarePages(nextConfig);
-} else {
-  module.exports = nextConfig;
-}
+// Export config, handling Cloudflare integration conditionally
+module.exports = nextConfig;

@@ -6,9 +6,6 @@ import { MangaBanner } from "@/components/manga-banner"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 
-// Import our banner animations
-import "@/styles/banner-animations.css"
-
 interface BannerCarouselProps {
   items: MangaData[]
   variant?: "large" | "medium" | "small"
