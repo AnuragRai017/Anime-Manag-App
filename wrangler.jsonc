@@ -2,12 +2,6 @@
   "name": "manga-reader-web-app",
   "compatibility_date": "2025-05-07",
   "pages_build_output_dir": ".vercel/output/static",
-  // Assets configuration
-  "assets": {
-    "directory": ".vercel/output/static"
-  },
-  // Main worker script
-  "main": "./.vercel/output/functions/_middleware.js",
   // Environment variables
   "vars": {
     "NEXT_PUBLIC_API_URL": "https://api.mangadex.org"
@@ -19,10 +13,10 @@
         "ENVIRONMENT": "production"
       }
     },
-    "staging": {
-      "name": "manga-reader-web-app-staging",
+    "preview": {
+      "name": "manga-reader-web-app-preview",
       "vars": {
-        "ENVIRONMENT": "staging"
+        "ENVIRONMENT": "preview"
       }
     }
   }
