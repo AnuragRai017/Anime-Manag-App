@@ -6,6 +6,7 @@ import { MangaDexAPI, MangaData } from "@/lib/api";
 import { MangaCard } from "@/components/manga-card";
 import { LoadingSpinner } from "@/components/ui/loading";
 
+export const runtime = 'edge';
 
 // MangaDex tag IDs for genres
 const GENRE_TAG_IDS: Record<string, string> = {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
+export const runtime = 'edge';
 export const revalidate = 0; // Don't cache chapter pages
 
 async function getChapterData(chapterId: string) {
