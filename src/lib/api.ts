@@ -397,8 +397,8 @@ export const getMangaTitle = (manga: MangaData): string => {
   // If there are alternative titles, try those as fallback
   if (manga.attributes.altTitles && manga.attributes.altTitles.length > 0) {
     // Try to find an English alt title first
-    for (const altTitle of manga.attributes.altTitles) {
-      for (const lang of languagePriority) {
+    for (const lang of languagePriority) {
+      for (const altTitle of manga.attributes.altTitles) {
         if (altTitle[lang]) {
           return altTitle[lang];
         }

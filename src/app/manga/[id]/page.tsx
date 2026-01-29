@@ -5,6 +5,7 @@ import { ChapterList } from "@/components/chapter-list";
 import { MangaDexAPI, getCoverImage, getMangaTitle } from "@/lib/api";
 import { Metadata } from "next";
 
+export const runtime = 'edge';
 export const revalidate = 3600; // Revalidate once per hour
 
 // Helper function to get manga description with proper language fallback
